@@ -1,19 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Navbar.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-interface Props {
-  // Define any props you need for the component
+interface Dimension {
+  width: number;
+  height: number;
 }
 
-const Navbar: React.FC<Props> = () => {
+const Navbar: React.FC = () => {
   const [isNavCollapsed, setIsNavCollapsed] = useState<boolean>(true);
   const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
+  const [screenSize, setScreenSize] = useState(getCurrentDimension());
+
+  function getCurrentDimension(): Dimension {
+    return {
+      width: window.innerWidth,
+      height: window.innerHeight,
+    };
+  }
+
+  useEffect(() => {
+    // function to get screen width
+    const updateDimension = () => {
+      setScreenSize(getCurrentDimension());
+    };
+    window.addEventListener("resize", updateDimension);
+
+    return () => {
+      window.removeEventListener("resize", updateDimension);
+    };
+  }, [screenSize]);
 
   return (
     <div>
       {
-        /* Add your component content here */
         <nav
           className={`${styles.navbarAdjust} navbar navbar-expand-md navbar-dark bg-dark`}
         >
@@ -21,6 +41,38 @@ const Navbar: React.FC<Props> = () => {
             <a className={`${styles.navbarLogo} navbar-brand h1 mb-0`} href="#">
               Aquario
             </a>
+            {screenSize.width < 768 ? (
+              <>
+                <form className={`d-flex`}>
+                  <input
+                    className="form-control me-2"
+                    type="search"
+                    placeholder="Search"
+                    aria-label="Search"
+                  />
+                  <button
+                    className="btn btn-outline-light my-2 my-sm-0"
+                    type="submit"
+                  >
+                    Search
+                  </button>
+                </form>
+                <button
+                  className="navbar-toggler"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#navbarNav"
+                  aria-controls="navbarNav"
+                  aria-expanded={!isNavCollapsed ? true : false}
+                  aria-label="Toggle navigation"
+                  onClick={handleNavCollapse}
+                >
+                  <span className="navbar-toggler-icon"></span>
+                </button>
+              </>
+            ) : (
+              <></>
+            )}
 
             <div
               className={`${isNavCollapsed ? "collapse" : ""} navbar-collapse`}
@@ -54,32 +106,38 @@ const Navbar: React.FC<Props> = () => {
                 </li>
               </ul>
             </div>
-            <form className={`d-flex`}>
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button
-                className="btn btn-outline-light my-2 my-sm-0"
-                type="submit"
-              >
-                Search
-              </button>
-            </form>
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded={!isNavCollapsed ? true : false}
-              aria-label="Toggle navigation"
-              onClick={handleNavCollapse}
-            >
-              <span className="navbar-toggler-icon"></span>
-            </button>
+            {screenSize.width >= 768 ? (
+              <>
+                <form className={`d-flex`}>
+                  <input
+                    className="form-control me-2"
+                    type="search"
+                    placeholder="Search"
+                    aria-label="Search"
+                  />
+                  <button
+                    className="btn btn-outline-light my-2 my-sm-0"
+                    type="submit"
+                  >
+                    Search
+                  </button>
+                </form>
+                <button
+                  className="navbar-toggler"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#navbarNav"
+                  aria-controls="navbarNav"
+                  aria-expanded={!isNavCollapsed ? true : false}
+                  aria-label="Toggle navigation"
+                  onClick={handleNavCollapse}
+                >
+                  <span className="navbar-toggler-icon"></span>
+                </button>
+              </>
+            ) : (
+              <></>
+            )}
           </div>
         </nav>
       }
