@@ -7,3 +7,7 @@
 }
 .navbarSearch {
 }
+
+.formContainer {
+  display: flex;
+}

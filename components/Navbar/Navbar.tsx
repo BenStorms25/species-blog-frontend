@@ -10,14 +10,23 @@ interface Dimension {
 const Navbar: React.FC = () => {
   const [isNavCollapsed, setIsNavCollapsed] = useState<boolean>(true);
   const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
-  const [screenSize, setScreenSize] = useState(getCurrentDimension());
+  const [screenSize, setScreenSize] = useState<Dimension>({
+    width: 0,
+    height: 0,
+  });
 
   function getCurrentDimension(): Dimension {
-    return {
-      width: window.innerWidth,
-      height: window.innerHeight,
-    };
+    if (typeof window !== "undefined") {
+      return {
+        width: window.innerWidth,
+        height: window.innerHeight,
+      };
+    }
   }
+
+  useEffect(() => {
+    setScreenSize(getCurrentDimension());
+  }, []);
 
   useEffect(() => {
     // function to get screen width
@@ -42,7 +51,7 @@ const Navbar: React.FC = () => {
               Aquario
             </a>
             {screenSize.width < 768 ? (
-              <>
+              <div className={styles.formContainer}>
                 <form className={`d-flex`}>
                   <input
                     className="form-control me-2"
@@ -69,9 +78,9 @@ const Navbar: React.FC = () => {
                 >
                   <span className="navbar-toggler-icon"></span>
                 </button>
-              </>
+              </div>
             ) : (
-              <></>
+              <div></div>
             )}
 
             <div
@@ -107,7 +116,7 @@ const Navbar: React.FC = () => {
               </ul>
             </div>
             {screenSize.width >= 768 ? (
-              <>
+              <div className={styles.formContainer}>
                 <form className={`d-flex`}>
                   <input
                     className="form-control me-2"
@@ -134,9 +143,9 @@ const Navbar: React.FC = () => {
                 >
                   <span className="navbar-toggler-icon"></span>
                 </button>
-              </>
+              </div>
             ) : (
-              <></>
+              <div></div>
             )}
           </div>
         </nav>
