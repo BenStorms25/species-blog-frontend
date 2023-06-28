@@ -1,11 +1,14 @@
 .search {
   padding-left: 2rem;
 }
-
 .navbarLogo {
   padding-left: 1rem;
+  padding-right: 1rem;
 }
-.navbarSearch {
+
+.navLink {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .formContainer {

@@ -11,7 +11,7 @@ const Navbar: React.FC = () => {
   const [isNavCollapsed, setIsNavCollapsed] = useState<boolean>(true);
   const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
   const [screenSize, setScreenSize] = useState<Dimension>({
-    width: 0,
+    width: 800,
     height: 0,
   });
 
@@ -44,17 +44,28 @@ const Navbar: React.FC = () => {
     <div>
       {
         <nav
-          className={`${styles.navbarAdjust} navbar navbar-expand-md navbar-dark bg-dark`}
+          className={`${
+            styles.navbarAdjust
+          } navbar navbar-expand-md navbar-dark bg-dark ${
+            screenSize.width > 1600 && "py-3"
+          }`}
         >
           <div className="container-fluid">
-            <a className={`${styles.navbarLogo} navbar-brand h1 mb-0`} href="#">
+            <a
+              className={`${styles.navbarLogo} navbar-brand h1 mb-0 ${
+                screenSize.width > 1600 && "fs-3"
+              }`}
+              href="#"
+            >
               Aquario
             </a>
-            {screenSize.width < 768 ? (
+            {screenSize.width < 768 && (
               <div className={styles.formContainer}>
                 <form className={`d-flex`}>
                   <input
-                    className="form-control me-2"
+                    className={`form-control me-2 ${
+                      screenSize.width > 1600 && "fs-5"
+                    }`}
                     type="search"
                     placeholder="Search"
                     aria-label="Search"
@@ -79,47 +90,51 @@ const Navbar: React.FC = () => {
                   <span className="navbar-toggler-icon"></span>
                 </button>
               </div>
-            ) : (
-              <div></div>
             )}
 
             <div
               className={`${isNavCollapsed ? "collapse" : ""} navbar-collapse`}
               id="navbarNav"
             >
-              <ul className="navbar-nav mr-auto">
-                <li className="nav-item active">
+              <ul
+                className={`navbar-nav mr-auto ${
+                  screenSize.width > 1600 && "fs-5"
+                }`}
+              >
+                <li className={`${styles.navLink} nav-item`}>
                   <a className="nav-link" href="#">
                     My Fish
                   </a>
                 </li>
-                <li className="nav-item">
+                <li className={`${styles.navLink} nav-item`}>
                   <a className="nav-link" href="#">
                     Posts
                   </a>
                 </li>
-                <li className="nav-item">
+                <li className={`${styles.navLink} nav-item`}>
                   <a className="nav-link" href="#">
                     Auctions
                   </a>
                 </li>
-                <li className="nav-item">
+                <li className={`${styles.navLink} nav-item`}>
                   <a className="nav-link" href="#">
                     Research
                   </a>
                 </li>
-                <li className="nav-item">
+                <li className={`${styles.navLink} nav-item`}>
                   <a className="nav-link" href="#">
                     Selling
                   </a>
                 </li>
               </ul>
             </div>
-            {screenSize.width >= 768 ? (
+            {screenSize.width >= 768 && (
               <div className={styles.formContainer}>
                 <form className={`d-flex`}>
                   <input
-                    className="form-control me-2"
+                    className={`form-control me-2 ${
+                      screenSize.width > 1600 && "fs-5"
+                    }`}
                     type="search"
                     placeholder="Search"
                     aria-label="Search"
@@ -144,8 +159,6 @@ const Navbar: React.FC = () => {
                   <span className="navbar-toggler-icon"></span>
                 </button>
               </div>
-            ) : (
-              <div></div>
             )}
           </div>
         </nav>
