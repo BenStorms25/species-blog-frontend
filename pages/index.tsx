@@ -1,6 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import Navbar from "../components/Navbar/Navbar";
+import Sidebar from "../components/Sidebar/Sidebar";
 
 const Home: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const Home: React.FC = () => {
 
       <main>
         <Navbar />
+        <Sidebar />
       </main>
 
       <footer></footer>
